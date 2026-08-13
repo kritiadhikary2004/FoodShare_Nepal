@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Register | FoodShare Nepal</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e8f5e9, #ffffff);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 40px 20px;
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 500px;
+
+            background: white;
+            padding: 40px;
+
+            border-radius: 25px;
+
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.10);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 30px;
+            font-weight: 700;
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .heading h1 {
+            font-size: 30px;
+            color: #222;
+            margin-bottom: 8px;
+        }
+
+        .heading p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 7px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px 15px;
+
+            border: 1px solid #ddd;
+            border-radius: 10px;
+
+            font-size: 14px;
+            outline: none;
+
+            transition: 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #2e7d32;
+
+            box-shadow:
+                0 0 0 3px rgba(46, 125, 50, 0.10);
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 8px;
+
+            border: none;
+            border-radius: 30px;
+
+            background: #2e7d32;
+            color: white;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .register-btn:hover {
+            background: #1b5e20;
+        }
+
+        .login-text {
+            text-align: center;
+            margin-top: 22px;
+
+            font-size: 14px;
+            color: #666;
+        }
+
+        .login-text a {
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-text a:hover {
+            text-decoration: underline;
+        }
+
+        .back-home {
+            display: block;
+            text-align: center;
+
+            margin-top: 18px;
+
+            color: #777;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .back-home:hover {
+            color: #2e7d32;
+        }
+
+        @media (max-width: 600px) {
+
+            .register-container {
+                padding: 30px 22px;
+            }
+
+            .heading h1 {
+                font-size: 26px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="register-container">
+
+        <div class="logo">
+            FoodShare
+        </div>
+
+        <div class="heading">
+
+            <h1>Create Your Account</h1>
+
+            <p>
+                Join FoodShare Nepal and make a difference.
+            </p>
+
+        </div>
+
+
+        <!-- REGISTER FORM -->
+
+        <form id="registerForm" method="POST">
+
+            <!-- ROLE -->
+
+            <input
+                type="hidden"
+                name="role"
+                id="role">
+
+
+            <!-- Full Name -->
+
+            <div class="form-group">
+
+                <label for="name">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your full name"
+                    required>
+
+            </div>
+
+
+            <!-- Email -->
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required>
+
+            </div>
+
+
+            <!-- Phone -->
+
+            <div class="form-group">
+
+                <label for="phone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Enter your phone number"
+                    required>
+
+            </div>
+
+
+            <!-- Location -->
+
+            <div class="form-group">
+
+                <label for="location">
+                    Location
+                </label>
+
+                <input
+                    type="text"
+                    id="location"
+                    name="location"
+                    placeholder="Enter your location"
+                    required>
+
+            </div>
+
+
+            <!-- Password -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Create a password"
+                    required>
+
+            </div>
+
+
+            <!-- Confirm Password -->
+
+            <div class="form-group">
+
+                <label for="confirmPassword">
+                    Confirm Password
+                </label>
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="Confirm your password"
+                    required>
+
+            </div>
+
+
+            <!-- Button -->
+
+            <button
+                type="submit"
+                class="register-btn">
+
+                Create Account
+
+            </button>
+
+        </form>
+
+
+        <p class="login-text">
+
+            Already have an account?
+
+            <a href="/login">
+                Login
+            </a>
+
+        </p>
+
+
+        <a href="/" class="back-home">
+            ← Back to Home
+        </a>
+
+    </div>
+
+
+    <!-- ROLE SCRIPT -->
+
+    <script>
+
+        const params =
+            new URLSearchParams(window.location.search);
+
+        const role =
+            params.get("role");
+
+        document.getElementById("role").value =
+            role || "receiver";
+
+    </script>
+
+</body>
+
+</html>
