@@ -462,7 +462,88 @@ app.get("/my-donations", (req, res) => {
         }
     );
 });
+// ================= LOGIN PAGE =================
 
+app.get("/login", (req, res) => {
+
+    res.sendFile(
+        path.join(__dirname, "public", "login.html")
+    );
+
+});
+// ================= LOGIN USER =================
+
+app.post("/login", (req, res) => {
+
+    const { email, password } = req.body;
+
+    const sql = `
+        SELECT *
+        FROM users
+        WHERE email = ? AND password = ?
+    `;
+
+    db.query(
+        sql,
+        [email, password],
+        (err, results) => {
+
+            if (err) {
+
+                console.log(
+                    "Login error:",
+                    err
+                );
+
+                return res.send(
+                    "Login failed. Please check the terminal."
+                );
+            }
+
+            if (results.length === 0) {
+
+                return res.send(
+                    "Invalid email or password!"
+                );
+            }
+
+            const user = results[0];
+
+            console.log(
+                "User logged in:",
+                user.email
+            );
+
+            // ================= DONOR =================
+
+            if (user.role === "donor") {
+
+                return res.redirect("/donor");
+            }
+
+            // ================= RECEIVER =================
+
+            if (user.role === "receiver") {
+
+                return res.send(`
+                    <h1>
+                        Welcome ${user.name}! 🎉
+                    </h1>
+
+                    <p>
+                        You are logged in successfully.
+                    </p>
+
+                    <a href="/">
+                        Go to Home
+                    </a>
+                `);
+            }
+
+        }
+    );
+
+});
 
 // ================= REGISTER PAGE =================
 
