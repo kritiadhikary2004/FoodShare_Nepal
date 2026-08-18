@@ -2,10 +2,11 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+          content="width=device-width, initial-scale=1.0">
 
     <title>My Donations | FoodShare Nepal</title>
 
@@ -19,137 +20,472 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Poppins", sans-serif;
         }
 
         body {
+
+            font-family: "Poppins", sans-serif;
+
             min-height: 100vh;
-            background: linear-gradient(135deg, #e8f5e9, #ffffff);
-            padding-bottom: 50px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e8f5e9,
+                    #f1f8e9,
+                    #ffffff
+                );
+
+            color: #333;
+
+            padding-bottom: 60px;
         }
+
+
+        /* ================= HEADER ================= */
 
         header {
-            background: white;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+
+            background: rgba(255, 255, 255, 0.95);
+
+            box-shadow:
+                0 3px 20px
+                rgba(0, 0, 0, 0.06);
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 10;
+
+            backdrop-filter: blur(10px);
         }
 
+
         nav {
+
             width: 90%;
+
             max-width: 1200px;
+
             height: 75px;
+
             margin: auto;
 
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
         }
 
+
         .logo {
-            font-size: 28px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            font-size: 25px;
+
             font-weight: 700;
+
             color: #2e7d32;
+
+            letter-spacing: -0.5px;
         }
 
+
+        .logo-icon {
+
+            width: 40px;
+
+            height: 40px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background: #e8f5e9;
+
+            border-radius: 50%;
+
+            font-size: 21px;
+        }
+
+
         .back-btn {
+
             text-decoration: none;
-            color: #444;
 
-            padding: 9px 20px;
+            color: #2e7d32;
 
-            border: 1px solid #ddd;
+            padding: 10px 20px;
+
+            border: 1px solid #c8e6c9;
+
             border-radius: 25px;
 
             font-size: 14px;
+
+            font-weight: 500;
+
+            background: #f8fff8;
+
+            transition: 0.3s;
         }
+
 
         .back-btn:hover {
+
             background: #2e7d32;
+
             color: white;
+
+            border-color: #2e7d32;
+
+            transform: translateX(-3px);
         }
+
+
+        /* ================= MAIN ================= */
 
         .container {
+
             width: 90%;
-            max-width: 1100px;
-            margin: 50px auto;
+
+            max-width: 1050px;
+
+            margin: 55px auto;
         }
+
 
         .heading {
+
             text-align: center;
-            margin-bottom: 40px;
+
+            margin-bottom: 45px;
+
+            animation: fadeDown 0.6s ease;
         }
+
+
+        @keyframes fadeDown {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(-15px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+            }
+        }
+
+
+        .heading-icon {
+
+            width: 70px;
+
+            height: 70px;
+
+            margin: 0 auto 18px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background: #e8f5e9;
+
+            border-radius: 50%;
+
+            font-size: 32px;
+
+            box-shadow:
+                0 8px 20px
+                rgba(46, 125, 50, 0.10);
+        }
+
 
         .heading h1 {
+
             font-size: 38px;
+
             color: #222;
+
             margin-bottom: 10px;
+
+            font-weight: 600;
         }
+
 
         .heading h1 span {
+
             color: #2e7d32;
         }
+
 
         .heading p {
-            color: #666;
+
+            color: #777;
+
             font-size: 15px;
+
+            line-height: 1.7;
         }
 
-        .donation-card {
-            background: white;
-            padding: 25px;
 
-            margin-bottom: 20px;
-
-            border-radius: 18px;
-
-            box-shadow:
-                0 10px 35px
-                rgba(0,0,0,0.08);
-        }
-
-        .donation-card h2 {
-            color: #2e7d32;
-            margin-bottom: 12px;
-        }
-
-        .donation-card p {
-            color: #555;
-            margin: 6px 0;
-        }
+        /* ================= EMPTY CARD ================= */
 
         .empty {
+
+            max-width: 700px;
+
+            margin: auto;
+
+            background: rgba(255, 255, 255, 0.96);
+
+            padding: 60px 30px;
+
+            border-radius: 25px;
+
             text-align: center;
-            background: white;
-            padding: 50px 20px;
-            border-radius: 20px;
 
             box-shadow:
-                0 10px 35px
-                rgba(0,0,0,0.08);
+                0 15px 45px
+                rgba(46, 125, 50, 0.10);
+
+            border: 1px solid
+                rgba(200, 230, 201, 0.7);
+
+            animation: fadeUp 0.7s ease;
         }
+
+
+        @keyframes fadeUp {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(20px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+            }
+        }
+
+
+        .empty-icon {
+
+            width: 90px;
+
+            height: 90px;
+
+            margin: 0 auto 22px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background: #f1f8e9;
+
+            border-radius: 50%;
+
+            font-size: 42px;
+        }
+
 
         .empty h2 {
-            margin-bottom: 10px;
+
+            color: #2e7d32;
+
+            font-size: 24px;
+
+            margin-bottom: 12px;
+
+            font-weight: 600;
         }
 
+
         .empty p {
+
             color: #777;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            max-width: 450px;
+
+            margin: auto;
+        }
+
+
+        .donate-btn {
+
+            display: inline-block;
+
+            margin-top: 25px;
+
+            padding: 12px 28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2e7d32,
+                    #43a047
+                );
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 25px;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            box-shadow:
+                0 8px 20px
+                rgba(46, 125, 50, 0.20);
+
+            transition: 0.3s;
+        }
+
+
+        .donate-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 25px
+                rgba(46, 125, 50, 0.28);
+        }
+
+
+        /* ================= FOOTER TEXT ================= */
+
+        .footer-text {
+
+            text-align: center;
+
+            margin-top: 35px;
+
+            color: #999;
+
+            font-size: 13px;
+        }
+
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 600px) {
+
+            nav {
+
+                width: 88%;
+
+                height: 68px;
+            }
+
+
+            .logo {
+
+                font-size: 21px;
+            }
+
+
+            .logo-icon {
+
+                width: 35px;
+
+                height: 35px;
+
+                font-size: 18px;
+            }
+
+
+            .back-btn {
+
+                padding: 8px 14px;
+
+                font-size: 13px;
+            }
+
+
+            .container {
+
+                margin-top: 40px;
+            }
+
+
+            .heading h1 {
+
+                font-size: 30px;
+            }
+
+
+            .heading p {
+
+                font-size: 14px;
+            }
+
+
+            .empty {
+
+                padding: 45px 22px;
+
+                border-radius: 20px;
+            }
+
         }
 
     </style>
 
 </head>
 
+
 <body>
+
 
 <header>
 
     <nav>
 
         <div class="logo">
+
+            <div class="logo-icon">
+                🍃
+            </div>
+
             FoodShare
+
         </div>
 
-        <a href="/donor" class="back-btn">
+
+        <a
+            href="/donor"
+            class="back-btn"
+        >
             ← Dashboard
         </a>
 
@@ -160,10 +496,15 @@
 
 <main class="container">
 
+
     <div class="heading">
 
+        <div class="heading-icon">
+            📦
+        </div>
+
         <h1>
-            My <span>Donations</span> 📦
+            My <span>Donations</span>
         </h1>
 
         <p>
@@ -176,17 +517,41 @@
 
     <div class="empty">
 
+        <div class="empty-icon">
+            🍱
+        </div>
+
+
         <h2>
             Your Donations
         </h2>
 
+
         <p>
             Your donated food will appear here.
+            Every donation you make can help reduce
+            food waste and support someone in need.
         </p>
+
+
+        <a
+            href="/donate"
+            class="donate-btn"
+        >
+            + Make a Donation
+        </a>
 
     </div>
 
+
+    <p class="footer-text">
+        Thank you for making a difference with
+        FoodShare Nepal 💚
+    </p>
+
+
 </main>
+
 
 </body>
 
