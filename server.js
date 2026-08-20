@@ -1,7 +1,9 @@
+require("dotenv").config();
+
 const mysql = require("mysql2");
 const express = require("express");
 const path = require("path");
-
+const session = require("express-session");
 const app = express();
 
 const PORT = 3000;
@@ -9,10 +11,10 @@ const PORT = 3000;
 // ================= DATABASE =================
 
 const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "foodshare_db"
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
 });
 
 db.connect((err) => {
@@ -29,6 +31,11 @@ db.connect((err) => {
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false
+}));
 
 
 // ================= HOME =================
@@ -206,11 +213,31 @@ app.post("/donate", (req, res) => {
 // ================= DONOR DASHBOARD =================
 
 app.get("/donor", (req, res) => {
+
+    if (!req.session.user) {
+        return res.redirect("/login");
+    }
+
     res.sendFile(
         path.join(__dirname, "public", "donor.html")
     );
 });
+// ================= LOGOUT =================
 
+app.get("/logout", (req, res) => {
+
+    req.session.destroy((err) => {
+
+        if (err) {
+            console.log("Logout error:", err);
+
+            return res.send("Logout failed.");
+        }
+
+        res.redirect("/login");
+    });
+
+});
 
 // ================= MY DONATIONS =================
 
@@ -512,7 +539,18 @@ app.post("/login", (req, res) => {
             console.log(
                 "User logged in:",
                 user.email
-            );
+            );      
+
+
+
+            // ================= SAVE USER IN SESSION =================
+
+            req.session.user = {
+              id: user.id,
+             name: user.name,
+           email: user.email,
+             role: user.role
+              };
 
             // ================= DONOR =================
 
