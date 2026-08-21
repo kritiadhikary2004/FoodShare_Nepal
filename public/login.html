@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,6 +44,7 @@
             overflow: hidden;
         }
 
+
         /* Background circles */
 
         body::before,
@@ -59,6 +61,7 @@
             z-index: 0;
         }
 
+
         body::before {
 
             width: 300px;
@@ -67,6 +70,7 @@
             top: -100px;
             left: -100px;
         }
+
 
         body::after {
 
@@ -83,6 +87,7 @@
         .login-container {
 
             width: 100%;
+
             max-width: 420px;
 
             background: rgba(255, 255, 255, 0.95);
@@ -95,7 +100,7 @@
                 0 20px 50px
                 rgba(46, 125, 50, 0.15);
 
-            position: relative;
+            position: absolute;
 
             z-index: 1;
 
@@ -103,6 +108,18 @@
                 rgba(255, 255, 255, 0.8);
 
             animation: fadeIn 0.6s ease;
+
+            /* Makes the card draggable */
+
+            cursor: grab;
+
+            user-select: none;
+        }
+
+
+        .login-container:active {
+
+            cursor: grabbing;
         }
 
 
@@ -211,6 +228,12 @@
             background: #fafafa;
 
             transition: 0.3s;
+
+            /* Inputs should still work normally */
+
+            cursor: text;
+
+            user-select: text;
         }
 
 
@@ -304,6 +327,8 @@
             font-weight: bold;
 
             margin-left: 4px;
+
+            cursor: pointer;
         }
 
 
@@ -330,6 +355,8 @@
             font-size: 14px;
 
             transition: 0.2s;
+
+            cursor: pointer;
         }
 
 
@@ -352,6 +379,7 @@
                 border-radius: 20px;
             }
 
+
             h1 {
 
                 font-size: 26px;
@@ -367,7 +395,7 @@
 <body>
 
 
-    <div class="login-container">
+    <div class="login-container" id="loginCard">
 
 
         <div class="logo">
@@ -447,6 +475,85 @@
 
 
     </div>
+
+
+    <script>
+
+        const card = document.getElementById("loginCard");
+
+        let isDragging = false;
+
+        let offsetX = 0;
+        let offsetY = 0;
+
+
+        card.addEventListener("mousedown", function(e) {
+
+            /*
+             * Don't start dragging when clicking
+             * inside input, button or links.
+             */
+
+            if (
+                e.target.tagName === "INPUT" ||
+                e.target.tagName === "BUTTON" ||
+                e.target.tagName === "A"
+            ) {
+                return;
+            }
+
+
+            isDragging = true;
+
+
+            const rect = card.getBoundingClientRect();
+
+
+            offsetX = e.clientX - rect.left;
+
+            offsetY = e.clientY - rect.top;
+
+        });
+
+
+        document.addEventListener("mousemove", function(e) {
+
+            if (!isDragging) {
+                return;
+            }
+
+
+            let x = e.clientX - offsetX;
+
+            let y = e.clientY - offsetY;
+
+
+            /* Keep the card inside the screen */
+
+            const maxX = window.innerWidth - card.offsetWidth;
+
+            const maxY = window.innerHeight - card.offsetHeight;
+
+
+            x = Math.max(0, Math.min(x, maxX));
+
+            y = Math.max(0, Math.min(y, maxY));
+
+
+            card.style.left = x + "px";
+
+            card.style.top = y + "px";
+
+        });
+
+
+        document.addEventListener("mouseup", function() {
+
+            isDragging = false;
+
+        });
+
+    </script>
 
 
 </body>
