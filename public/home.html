@@ -1,17 +1,23 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>FoodShare Nepal</title>
 
+
     <!-- Google Font -->
+
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+
 
     <style>
 
@@ -22,136 +28,671 @@
             font-family: 'Poppins', sans-serif;
         }
 
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
         body {
             background: #f7faf7;
+            color: #222;
         }
 
 
         /* ================= NAVBAR ================= */
 
         header {
+
             width: 100%;
-            background: #ffffff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+
+            background: rgba(255, 255, 255, 0.95);
+
+            box-shadow:
+                0 4px 20px rgba(0, 0, 0, 0.06);
+
+            position: relative;
+
+            z-index: 10;
         }
 
+
         nav {
+
             width: 90%;
+
+            max-width: 1200px;
+
             margin: auto;
-            height: 80px;
+
+            height: 78px;
 
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
         }
 
+
         .logo {
-            font-size: 30px;
-            font-weight: 700;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            font-size: 27px;
+
+            font-weight: 800;
+
             color: #2e7d32;
+
+            letter-spacing: -0.5px;
         }
+
+
+        .logo-icon {
+
+            width: 42px;
+
+            height: 42px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background: #e8f5e9;
+
+            border-radius: 13px;
+
+            font-size: 23px;
+        }
+
 
         nav ul {
+
             display: flex;
+
+            align-items: center;
+
             list-style: none;
+
+            gap: 10px;
         }
 
-        nav ul li {
-            margin-left: 35px;
-        }
 
         nav ul li a {
+
+            display: block;
+
+            padding: 10px 18px;
+
             text-decoration: none;
-            color: #333;
+
+            color: #444;
+
+            font-size: 14px;
+
             font-weight: 500;
-            transition: 0.3s;
+
+            border-radius: 25px;
+
+            transition: all 0.3s ease;
         }
 
+
         nav ul li a:hover {
+
             color: #2e7d32;
+
+            background: #eaf6eb;
+        }
+
+
+        nav ul li:last-child a {
+
+            background: #2e7d32;
+
+            color: white;
+
+            padding: 11px 21px;
+        }
+
+
+        nav ul li:last-child a:hover {
+
+            background: #1b5e20;
+
+            transform: translateY(-2px);
         }
 
 
         /* ================= HERO ================= */
 
         .hero {
-            min-height: 90vh;
+
+            min-height: calc(100vh - 78px);
 
             display: flex;
+
             justify-content: center;
+
             align-items: center;
 
             text-align: center;
-            padding: 40px;
 
-            background: linear-gradient(
-                135deg,
-                #e8f5e9,
-                #ffffff
-            );
+            padding: 70px 25px;
+
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 20%,
+                    rgba(129, 199, 132, 0.28),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 90% 80%,
+                    rgba(165, 214, 167, 0.28),
+                    transparent 30%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #e8f5e9,
+                    #ffffff,
+                    #f1f8e9
+                );
         }
+
+
+        /* Background circles */
+
+        .hero::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 420px;
+
+            height: 420px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(46, 125, 50, 0.12);
+
+            top: -220px;
+
+            left: -160px;
+        }
+
+
+        .hero::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 500px;
+
+            height: 500px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(46, 125, 50, 0.12);
+
+            bottom: -300px;
+
+            right: -180px;
+        }
+
+
+        /* Floating food icons */
+
+        .food {
+
+            position: absolute;
+
+            font-size: 38px;
+
+            opacity: 0.65;
+
+            animation: float 4s ease-in-out infinite;
+        }
+
+
+        .food.one {
+
+            top: 18%;
+
+            left: 10%;
+        }
+
+
+        .food.two {
+
+            top: 28%;
+
+            right: 10%;
+
+            animation-delay: 1s;
+        }
+
+
+        .food.three {
+
+            bottom: 17%;
+
+            left: 14%;
+
+            animation-delay: 2s;
+        }
+
+
+        .food.four {
+
+            bottom: 13%;
+
+            right: 13%;
+
+            animation-delay: 1.5s;
+        }
+
+
+        @keyframes float {
+
+            0%,
+            100% {
+
+                transform: translateY(0) rotate(0deg);
+            }
+
+            50% {
+
+                transform: translateY(-15px) rotate(5deg);
+            }
+        }
+
+
+        /* Hero content */
 
         .hero-content {
-            max-width: 800px;
+
+            max-width: 900px;
+
+            position: relative;
+
+            z-index: 2;
+
+            animation: heroAppear 0.9s ease;
         }
 
+
+        @keyframes heroAppear {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(30px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+            }
+        }
+
+
+        .tag {
+
+            display: inline-block;
+
+            padding: 8px 18px;
+
+            margin-bottom: 22px;
+
+            border-radius: 50px;
+
+            background: #e1f2e3;
+
+            color: #2e7d32;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            letter-spacing: 0.5px;
+        }
+
+
         .hero h1 {
-            font-size: 65px;
-            color: #222;
-            line-height: 1.2;
+
+            font-size: clamp(45px, 7vw, 76px);
+
+            font-weight: 800;
+
+            color: #1f2933;
+
+            line-height: 1.12;
+
+            letter-spacing: -2px;
+
             margin-bottom: 25px;
         }
 
+
         .hero h1 span {
+
             color: #2e7d32;
+
+            position: relative;
         }
 
+
+        .hero h1 span::after {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+
+            bottom: -6px;
+
+            width: 100%;
+
+            height: 5px;
+
+            background: #81c784;
+
+            border-radius: 10px;
+
+            opacity: 0.7;
+        }
+
+
         .hero p {
-            font-size: 18px;
-            color: #555;
+
+            max-width: 720px;
+
+            margin: 0 auto 38px;
+
+            font-size: 17px;
+
+            color: #5f6b63;
+
             line-height: 1.8;
-            margin-bottom: 40px;
+
+            font-weight: 400;
         }
 
 
         /* ================= BUTTONS ================= */
 
         .buttons {
+
             display: flex;
+
             justify-content: center;
-            gap: 20px;
+
+            align-items: center;
+
+            gap: 16px;
+
+            flex-wrap: wrap;
         }
 
+
         .btn {
-            padding: 15px 35px;
+
+            min-width: 155px;
+
+            padding: 15px 28px;
 
             text-decoration: none;
 
-            border-radius: 50px;
+            border-radius: 12px;
 
-            font-size: 17px;
+            font-size: 15px;
+
             font-weight: 600;
 
-            transition: 0.3s;
+            transition: all 0.3s ease;
+
+            display: inline-block;
         }
+
 
         .primary {
-            background: #2e7d32;
+
+            background: linear-gradient(
+                135deg,
+                #2e7d32,
+                #43a047
+            );
+
             color: white;
+
+            box-shadow:
+                0 10px 25px rgba(46, 125, 50, 0.25);
         }
+
 
         .primary:hover {
-            background: #256428;
+
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 15px 30px rgba(46, 125, 50, 0.32);
         }
+
 
         .secondary {
-            border: 2px solid #2e7d32;
+
+            background: white;
+
             color: #2e7d32;
+
+            border: 2px solid #2e7d32;
         }
 
+
         .secondary:hover {
+
             background: #2e7d32;
+
             color: white;
+
+            transform: translateY(-4px);
+
+            box-shadow:
+                0 10px 25px rgba(46, 125, 50, 0.20);
+        }
+
+
+        /* ================= IMPACT ================= */
+
+        .impact {
+
+            margin: 45px auto 0;
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .impact-card {
+
+            min-width: 150px;
+
+            padding: 15px 20px;
+
+            background: rgba(255, 255, 255, 0.75);
+
+            border: 1px solid rgba(46, 125, 50, 0.10);
+
+            border-radius: 15px;
+
+            backdrop-filter: blur(8px);
+        }
+
+
+        .impact-card strong {
+
+            display: block;
+
+            color: #2e7d32;
+
+            font-size: 20px;
+        }
+
+
+        .impact-card span {
+
+            color: #777;
+
+            font-size: 11px;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 700px) {
+
+            nav {
+
+                width: 92%;
+
+                height: 70px;
+            }
+
+
+            .logo {
+
+                font-size: 21px;
+            }
+
+
+            .logo-icon {
+
+                width: 36px;
+
+                height: 36px;
+
+                font-size: 19px;
+            }
+
+
+            nav ul {
+
+                gap: 0;
+            }
+
+
+            nav ul li a {
+
+                padding: 8px 9px;
+
+                font-size: 12px;
+            }
+
+
+            nav ul li:last-child a {
+
+                padding: 9px 12px;
+            }
+
+
+            .hero {
+
+                min-height: calc(100vh - 70px);
+
+                padding: 55px 20px;
+            }
+
+
+            .hero h1 {
+
+                font-size: 43px;
+
+                letter-spacing: -1px;
+            }
+
+
+            .hero p {
+
+                font-size: 14px;
+
+                line-height: 1.7;
+            }
+
+
+            .food {
+
+                font-size: 27px;
+
+                opacity: 0.45;
+            }
+
+
+            .impact-card {
+
+                min-width: 125px;
+
+                padding: 12px;
+            }
+        }
+
+
+        @media (max-width: 430px) {
+
+            nav ul li a {
+
+                padding: 7px 6px;
+
+                font-size: 11px;
+            }
+
+
+            .logo {
+
+                font-size: 18px;
+            }
+
+
+            .hero h1 {
+
+                font-size: 37px;
+            }
+
+
+            .buttons {
+
+                flex-direction: column;
+            }
+
+
+            .btn {
+
+                width: 210px;
+            }
         }
 
     </style>
@@ -161,28 +702,42 @@
 
 <body>
 
-    <!-- Navbar -->
+
+    <!-- ================= NAVBAR ================= -->
 
     <header>
 
         <nav>
 
             <div class="logo">
+
+                <div class="logo-icon">
+                    🍃
+                </div>
+
                 FoodShare
+
             </div>
+
 
             <ul>
 
                 <li>
-                    <a href="/">Home</a>
+                    <a href="/">
+                        Home
+                    </a>
                 </li>
 
                 <li>
-                    <a href="/login">Login</a>
+                    <a href="/login">
+                        Login
+                    </a>
                 </li>
 
                 <li>
-                    <a href="/register">Register</a>
+                    <a href="/register">
+                        Register
+                    </a>
                 </li>
 
             </ul>
@@ -192,36 +747,131 @@
     </header>
 
 
-    <!-- Hero Section -->
+
+    <!-- ================= HERO ================= -->
 
     <section class="hero">
 
+
+        <!-- Floating decorations -->
+
+        <div class="food one">
+            🥦
+        </div>
+
+        <div class="food two">
+            🍎
+        </div>
+
+        <div class="food three">
+            🥕
+        </div>
+
+        <div class="food four">
+            🍲
+        </div>
+
+
+
         <div class="hero-content">
 
+
+            <div class="tag">
+                🌱 Together for a better Nepal
+            </div>
+
+
             <h1>
+
                 Save Food,
-                <span>Serve Humanity</span>
+
+                <span>
+                    Serve Humanity
+                </span>
+
             </h1>
 
+
             <p>
+
                 Every meal shared can brighten someone's day.
                 Join FoodShare Nepal to reduce food waste and
                 help people in need. Together, we can build a
                 community where extra food reaches those who
                 need it most.
+
             </p>
+
+
+            <!-- Buttons -->
 
             <div class="buttons">
 
-                <a href="/choose-role" class="btn primary">
-                    Get Started
+                <a
+                    href="/choose-role"
+                    class="btn primary">
+
+                    Get Started →
+                    
                 </a>
 
-                <a href="/login" class="btn secondary">
+
+                <a
+                    href="/login"
+                    class="btn secondary">
+
                     Login
+
                 </a>
 
             </div>
+
+
+
+            <!-- Impact cards -->
+
+            <div class="impact">
+
+                <div class="impact-card">
+
+                    <strong>
+                        🍱
+                    </strong>
+
+                    <span>
+                        Share Extra Food
+                    </span>
+
+                </div>
+
+
+                <div class="impact-card">
+
+                    <strong>
+                        ♻️
+                    </strong>
+
+                    <span>
+                        Reduce Food Waste
+                    </span>
+
+                </div>
+
+
+                <div class="impact-card">
+
+                    <strong>
+                        ❤️
+                    </strong>
+
+                    <span>
+                        Help People
+                    </span>
+
+                </div>
+
+            </div>
+
 
         </div>
 
