@@ -1,652 +1,389 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Donate Food | FoodShare Nepal</title>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-
-
     <style>
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Poppins", sans-serif;
+            font-family: Arial, sans-serif;
         }
-
 
         body {
-
-            min-height: 100vh;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #e8f5e9,
-                    #ffffff
-                );
-
-            color: #222;
-
-            padding-bottom: 50px;
+            background: #f5f8f4;
+            color: #263238;
         }
 
-
-        /* ================= NAVBAR ================= */
-
-        header {
-
-            width: 100%;
-
-            background: white;
-
-            box-shadow:
-                0 2px 12px
-                rgba(0, 0, 0, 0.07);
-        }
-
-
+        /* NAVBAR */
         nav {
-
-            width: 90%;
-            max-width: 1200px;
-
-            height: 75px;
-
-            margin: auto;
-
+            height: 70px;
+            background: #ffffff;
             display: flex;
-
             justify-content: space-between;
-
             align-items: center;
+            padding: 0 8%;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
         }
-
 
         .logo {
-
-            font-size: 28px;
-
-            font-weight: 700;
-
+            font-size: 24px;
+            font-weight: bold;
             color: #2e7d32;
         }
 
+        .logo span {
+            color: #81c784;
+        }
 
-        .back-btn {
-
+        nav a {
             text-decoration: none;
-
             color: #444;
-
-            font-size: 14px;
-
-            font-weight: 500;
-
-            padding: 9px 20px;
-
-            border: 1px solid #ddd;
-
-            border-radius: 25px;
-
-            transition: 0.3s;
-        }
-
-
-        .back-btn:hover {
-
-            background: #2e7d32;
-
-            color: white;
-
-            border-color: #2e7d32;
-        }
-
-
-        /* ================= MAIN ================= */
-
-        .main-container {
-
-            width: 90%;
-
-            max-width: 1000px;
-
-            margin: 55px auto;
-        }
-
-
-        /* ================= HEADING ================= */
-
-        .heading {
-
-            text-align: center;
-
-            margin-bottom: 40px;
-        }
-
-
-        .small-title {
-
-            color: #2e7d32;
-
-            font-size: 13px;
-
-            font-weight: 600;
-
-            letter-spacing: 2px;
-
-            margin-bottom: 10px;
-        }
-
-
-        .heading h1 {
-
-            font-size: 42px;
-
-            margin-bottom: 12px;
-
-            color: #222;
-        }
-
-
-        .heading h1 span {
-
-            color: #2e7d32;
-        }
-
-
-        .heading p {
-
-            max-width: 650px;
-
-            margin: auto;
-
-            color: #666;
-
-            line-height: 1.7;
-
             font-size: 15px;
+            margin-left: 25px;
+            font-weight: 500;
         }
 
-
-        /* ================= FORM CARD ================= */
-
-        .donation-card {
-
-            background: white;
-
-            border-radius: 25px;
-
-            padding: 40px;
-
-            box-shadow:
-                0 15px 50px
-                rgba(0, 0, 0, 0.09);
-        }
-
-
-        .section-title {
-
-            font-size: 21px;
-
+        nav a:hover {
             color: #2e7d32;
-
-            margin-bottom: 25px;
-
-            font-weight: 600;
         }
 
-
-        /* ================= FORM GRID ================= */
-
-        .form-grid {
-
-            display: grid;
-
-            grid-template-columns: 1fr 1fr;
-
-            gap: 22px;
-        }
-
-
-        .form-group {
-
+        /* MAIN */
+        .main {
+            min-height: calc(100vh - 70px);
             display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+        }
 
+        .donation-wrapper {
+            width: 950px;
+            max-width: 100%;
+            display: grid;
+            grid-template-columns: 40% 60%;
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.10);
+        }
+
+        /* LEFT SIDE */
+        .left {
+            background: #2e7d32;
+            color: white;
+            padding: 45px 35px;
+            display: flex;
             flex-direction: column;
+            justify-content: center;
         }
 
-
-        .full-width {
-
-            grid-column: 1 / -1;
+        .food-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
         }
 
+        .left h1 {
+            font-size: 34px;
+            line-height: 1.2;
+            margin-bottom: 18px;
+        }
+
+        .left p {
+            line-height: 1.7;
+            font-size: 15px;
+            color: #e8f5e9;
+        }
+
+        .benefits {
+            margin-top: 30px;
+        }
+
+        .benefits div {
+            margin: 14px 0;
+            font-size: 14px;
+        }
+
+        /* RIGHT SIDE */
+        .right {
+            padding: 40px 45px;
+        }
+
+        .right h2 {
+            color: #2e7d32;
+            font-size: 28px;
+            margin-bottom: 7px;
+        }
+
+        .subtitle {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .input-box {
+            margin-bottom: 18px;
+        }
 
         label {
-
+            display: block;
+            margin-bottom: 7px;
             font-size: 14px;
-
-            font-weight: 500;
-
-            margin-bottom: 8px;
-
-            color: #333;
+            font-weight: bold;
+            color: #444;
         }
-
 
         input,
-        textarea,
-        select {
-
-            width: 100%;
-
-            padding: 13px 15px;
-
-            border: 1px solid #ddd;
-
-            border-radius: 10px;
-
-            font-size: 14px;
-
-            outline: none;
-
-            transition: 0.3s;
-
-            background: #fff;
-        }
-
-
+        select,
         textarea {
-
-            min-height: 120px;
-
-            resize: vertical;
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d7ddd7;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+            background: #fafafa;
+            transition: 0.3s;
         }
-
 
         input:focus,
-        textarea:focus,
-        select:focus {
-
-            border-color: #2e7d32;
-
-            box-shadow:
-                0 0 0 3px
-                rgba(46, 125, 50, 0.10);
+        select:focus,
+        textarea:focus {
+            border-color: #43a047;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(67,160,71,0.10);
         }
 
-
-        /* ================= INFO BOX ================= */
-
-        .info-box {
-
-            margin-top: 30px;
-
-            padding: 18px 20px;
-
-            background: #f1f8f2;
-
-            border-left: 4px solid #2e7d32;
-
-            border-radius: 10px;
-
-            color: #555;
-
-            font-size: 13px;
-
-            line-height: 1.7;
+        textarea {
+            height: 100px;
+            resize: none;
         }
-
-
-        /* ================= BUTTON ================= */
-
-        .submit-container {
-
-            text-align: center;
-
-            margin-top: 30px;
-        }
-
 
         .donate-btn {
-
+            width: 100%;
             border: none;
-
-            padding: 14px 40px;
-
-            border-radius: 30px;
-
-            background: #2e7d32;
-
+            padding: 14px;
+            margin-top: 8px;
+            border-radius: 8px;
+            background: #43a047;
             color: white;
-
             font-size: 16px;
-
-            font-weight: 600;
-
+            font-weight: bold;
             cursor: pointer;
-
             transition: 0.3s;
         }
 
-
         .donate-btn:hover {
-
-            background: #1b5e20;
-
+            background: #2e7d32;
             transform: translateY(-2px);
-
-            box-shadow:
-                0 8px 20px
-                rgba(46, 125, 50, 0.25);
         }
 
+        .note {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #888;
+        }
 
-        /* ================= RESPONSIVE ================= */
+        /* RESPONSIVE */
+        @media (max-width: 750px) {
 
-        @media (max-width: 700px) {
+            nav {
+                padding: 0 5%;
+            }
 
-            .form-grid {
+            nav a {
+                margin-left: 10px;
+                font-size: 13px;
+            }
 
+            .donation-wrapper {
                 grid-template-columns: 1fr;
             }
 
-            .full-width {
-
-                grid-column: auto;
+            .left {
+                padding: 30px;
             }
 
-            .donation-card {
-
-                padding: 25px 20px;
+            .left h1 {
+                font-size: 28px;
             }
 
-            .heading h1 {
-
-                font-size: 32px;
+            .right {
+                padding: 30px 25px;
             }
 
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
         }
-
     </style>
-
 </head>
-
 
 <body>
 
+    <nav>
+        <div class="logo">FoodShare <span>Nepal</span></div>
 
-    <!-- ================= NAVBAR ================= -->
-
-    <header>
-
-        <nav>
-
-            <div class="logo">
-                FoodShare
-            </div>
-
-            <a href="/" class="back-btn">
-                ← Home
-            </a>
-
-        </nav>
-
-    </header>
-
-
-
-    <!-- ================= MAIN ================= -->
-
-    <main class="main-container">
-
-
-        <!-- Heading -->
-
-        <div class="heading">
-
-            <div class="small-title">
-                FOOD DONATION
-            </div>
-
-            <h1>
-                Share Food,
-                <span>Share Hope</span>
-            </h1>
-
-            <p>
-                Have extra food? Don't let it go to waste.
-                Share it with someone who needs it and
-                make a meaningful difference in your community.
-            </p>
-
+        <div>
+            <a href="/">Home</a>
         </div>
+    </nav>
 
+    <div class="main">
 
+        <div class="donation-wrapper">
 
-        <!-- Donation Form -->
+            <!-- LEFT -->
+            <div class="left">
 
-        <div class="donation-card">
+                <div class="food-icon">🍲</div>
 
+                <h1>Share Food.<br>Spread Hope.</h1>
 
-            <div class="section-title">
-                🍱 Food Donation Details
+                <p>
+                    Your extra food can become someone's much-needed meal.
+                    Donate your surplus food and help reduce food waste
+                    in our community.
+                </p>
+
+                <div class="benefits">
+                    <div>✓ Help people in need</div>
+                    <div>✓ Reduce food waste</div>
+                    <div>✓ Make your community stronger</div>
+                    <div>✓ Every meal makes a difference</div>
+                </div>
+
             </div>
 
 
-            <form action="/donate" method="POST">
+            <!-- RIGHT -->
+            <div class="right">
 
+                <h2>Donate Food</h2>
 
-                <div class="form-grid">
+                <p class="subtitle">
+                    Fill in the details below to share your food.
+                </p>
 
+                <form action="/donate" method="POST">
 
-                    <!-- Food Name -->
+                    <div class="form-row">
 
-                    <div class="form-group">
+                        <div class="input-box">
+                            <label>Food Name</label>
+                            <input
+                                type="text"
+                                name="food_name"
+                                placeholder="e.g. Rice, Dal, Bread"
+                                required
+                            >
+                        </div>
 
-                        <label for="food_name">
-                            Food Name
-                        </label>
-
-                        <input
-                            type="text"
-                            id="food_name"
-                            name="food_name"
-                            placeholder="e.g. Vegetable Rice"
-                            required>
-
-                    </div>
-
-
-
-                    <!-- Quantity -->
-
-                    <div class="form-group">
-
-                        <label for="quantity">
-                            Quantity
-                        </label>
-
-                        <input
-                            type="text"
-                            id="quantity"
-                            name="quantity"
-                            placeholder="e.g. 5 plates"
-                            required>
+                        <div class="input-box">
+                            <label>Quantity</label>
+                            <input
+                                type="text"
+                                name="quantity"
+                                placeholder="e.g. 5 plates"
+                                required
+                            >
+                        </div>
 
                     </div>
 
 
-
-                    <!-- Location -->
-
-                    <div class="form-group">
-
-                        <label for="location">
-                            Pickup Location
-                        </label>
-
+                    <div class="input-box">
+                        <label>Pickup Location</label>
                         <input
                             type="text"
-                            id="location"
                             name="location"
                             placeholder="Enter pickup location"
-                            required>
+                            required
+                        >
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="input-box">
+                            <label>Food Type</label>
+
+                            <select name="food_type" required>
+                                <option value="">Select food type</option>
+                                <option value="Meal">Meal</option>
+                                <option value="Bakery">Bakery</option>
+                                <option value="Fruits">Fruits</option>
+                                <option value="Vegetables">Vegetables</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+
+                        <div class="input-box">
+                            <label>Available Date</label>
+
+                            <input
+                                type="date"
+                                name="available_date"
+                                required
+                            >
+                        </div>
 
                     </div>
 
 
+                    <div class="input-box">
 
-                    <!-- Food Type -->
-
-                    <div class="form-group">
-
-                        <label for="food_type">
-                            Food Type
-                        </label>
-
-                        <select
-                            id="food_type"
-                            name="food_type"
-                            required>
-
-                            <option value="">
-                                Select food type
-                            </option>
-
-                            <option value="Meal">
-                                🍛 Meal
-                            </option>
-
-                            <option value="Bakery">
-                                🥐 Bakery
-                            </option>
-
-                            <option value="Fruits">
-                                🍎 Fruits
-                            </option>
-
-                            <option value="Vegetables">
-                                🥦 Vegetables
-                            </option>
-
-                            <option value="Other">
-                                🍱 Other
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-
-                    <!-- Available Date -->
-
-                    <div class="form-group">
-
-                        <label for="available_date">
-                            Available Date
-                        </label>
-
-                        <input
-                            type="date"
-                            id="available_date"
-                            name="available_date"
-                            required>
-
-                    </div>
-
-
-
-                    <!-- Pickup Time -->
-
-                    <div class="form-group">
-
-                        <label for="pickup_time">
-                            Preferred Pickup Time
-                        </label>
+                        <label>Pickup Time</label>
 
                         <input
                             type="time"
-                            id="pickup_time"
                             name="pickup_time"
-                            required>
+                            required
+                        >
 
                     </div>
 
 
+                    <div class="input-box">
 
-                    <!-- Description -->
-
-                    <div class="form-group full-width">
-
-                        <label for="description">
-                            Description
-                        </label>
+                        <label>Description</label>
 
                         <textarea
-                            id="description"
                             name="description"
-                            placeholder="Tell us something about the food..."></textarea>
+                            placeholder="Add any additional information about the food..."
+                        ></textarea>
 
                     </div>
 
 
-                </div>
-
-
-
-                <!-- Information -->
-
-                <div class="info-box">
-
-                    💚 <strong>Thank you for donating!</strong>
-
-                    Please make sure the food is safe,
-                    fresh, and suitable for consumption.
-                    Your small contribution can help
-                    reduce food waste and support someone
-                    in need.
-
-                </div>
-
-
-
-                <!-- Submit -->
-
-                <div class="submit-container">
-
-                    <button
-                        type="submit"
-                        class="donate-btn">
-
+                    <button type="submit" class="donate-btn">
                         Donate Food ❤️
-
                     </button>
 
-                </div>
+                </form>
 
+                <p class="note">
+                    Thank you for helping make Nepal a better place 🌱
+                </p>
 
-            </form>
-
+            </div>
 
         </div>
 
-
-    </main>
-
+    </div>
 
 </body>
-
 </html>
