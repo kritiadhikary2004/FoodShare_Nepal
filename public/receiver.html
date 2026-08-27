@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Receiver Dashboard | FoodShare Nepal</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e8f5e9,
+                    #f1f8e9,
+                    #ffffff
+                );
+
+            color: #333;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            background: rgba(255,255,255,0.95);
+
+            box-shadow:
+                0 3px 20px rgba(0,0,0,0.07);
+
+            position: sticky;
+            top: 0;
+
+            z-index: 10;
+        }
+
+        nav {
+            width: 90%;
+            max-width: 1200px;
+
+            height: 75px;
+
+            margin: auto;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            font-size: 24px;
+            font-weight: 600;
+
+            color: #2e7d32;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: #e8f5e9;
+
+            border-radius: 50%;
+        }
+
+        .logout {
+            text-decoration: none;
+
+            padding: 9px 20px;
+
+            border: 1px solid #c8e6c9;
+
+            border-radius: 25px;
+
+            color: #2e7d32;
+
+            font-size: 14px;
+
+            transition: 0.3s;
+        }
+
+        .logout:hover {
+            background: #2e7d32;
+            color: white;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+
+            margin: 55px auto;
+        }
+
+        .welcome {
+            text-align: center;
+
+            margin-bottom: 45px;
+        }
+
+        .welcome-icon {
+            width: 75px;
+            height: 75px;
+
+            margin: auto;
+            margin-bottom: 18px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: #e8f5e9;
+
+            border-radius: 50%;
+
+            font-size: 34px;
+        }
+
+        .welcome h1 {
+            font-size: 36px;
+
+            color: #222;
+
+            margin-bottom: 10px;
+        }
+
+        .welcome h1 span {
+            color: #2e7d32;
+        }
+
+        .welcome p {
+            color: #777;
+
+            font-size: 15px;
+        }
+
+        /* ================= CARDS ================= */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+
+            padding: 35px;
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(46,125,50,0.10);
+
+            border: 1px solid #e0f2e1;
+
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 18px 40px
+                rgba(46,125,50,0.16);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: #f1f8e9;
+
+            border-radius: 16px;
+
+            font-size: 28px;
+
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            color: #2e7d32;
+
+            font-size: 21px;
+
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #777;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+
+            padding: 10px 22px;
+
+            background: #2e7d32;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 25px;
+
+            font-size: 14px;
+
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #1b5e20;
+
+            transform: translateY(-2px);
+        }
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            text-align: center;
+
+            margin-top: 45px;
+
+            color: #999;
+
+            font-size: 13px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome h1 {
+                font-size: 29px;
+            }
+
+            nav {
+                width: 88%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <nav>
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🍃
+            </div>
+
+            FoodShare Nepal
+
+        </div>
+
+        <a
+            href="/logout"
+            class="logout"
+        >
+            Logout
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="container">
+
+    <section class="welcome">
+
+        <div class="welcome-icon">
+            🤝
+        </div>
+
+        <h1>
+            Welcome to
+            <span>FoodShare</span>
+        </h1>
+
+        <p>
+            Find available food and connect with generous donors.
+        </p>
+
+    </section>
+
+
+    <section class="cards">
+
+        <!-- AVAILABLE FOOD -->
+
+        <div class="card">
+
+            <div class="card-icon">
+                🍱
+            </div>
+
+            <h2>
+                Available Food
+            </h2>
+
+            <p>
+                Browse food donations shared by donors
+                and find food available near you.
+            </p>
+
+            <a
+                href="#"
+                class="btn"
+            >
+                Browse Food
+            </a>
+
+        </div>
+
+
+        <!-- MY REQUESTS -->
+
+        <div class="card">
+
+            <div class="card-icon">
+                📋
+            </div>
+
+            <h2>
+                My Requests
+            </h2>
+
+            <p>
+                View the food requests you have made
+                and check their status.
+            </p>
+
+            <a
+                href="#"
+                class="btn"
+            >
+                My Requests
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <p class="footer">
+        Together we can reduce food waste and help our community 💚
+    </p>
+
+</main>
+
+</body>
+
+</html>
