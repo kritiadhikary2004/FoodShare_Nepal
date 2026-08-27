@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +24,11 @@
 
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #e8f5e9, #ffffff);
+
+            background:
+                radial-gradient(circle at top left, #c8e6c9, transparent 35%),
+                radial-gradient(circle at bottom right, #dcedc8, transparent 35%),
+                linear-gradient(135deg, #f1f8e9, #ffffff);
 
             display: flex;
             justify-content: center;
@@ -32,137 +37,334 @@
             padding: 40px 20px;
         }
 
+        /* ================= REGISTER CARD ================= */
+
         .register-container {
             width: 100%;
-            max-width: 500px;
+            max-width: 520px;
 
-            background: white;
-            padding: 40px;
+            background: rgba(255, 255, 255, 0.96);
 
-            border-radius: 25px;
+            padding: 42px 45px;
 
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.10);
+            border-radius: 28px;
+
+            box-shadow:
+                0 20px 60px rgba(46, 125, 50, 0.14);
+
+            border: 1px solid rgba(200, 230, 201, 0.8);
+
+            animation: slideUp 0.7s ease;
         }
+
+        @keyframes slideUp {
+
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        /* ================= LOGO ================= */
 
         .logo {
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+
             font-size: 30px;
             font-weight: 700;
+
             color: #2e7d32;
-            margin-bottom: 10px;
+
+            margin-bottom: 8px;
         }
+
+        .logo-icon {
+
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: #e8f5e9;
+
+            border-radius: 50%;
+
+            font-size: 23px;
+
+            box-shadow:
+                0 6px 15px rgba(46, 125, 50, 0.12);
+        }
+
+        /* ================= HEADING ================= */
 
         .heading {
             text-align: center;
+
             margin-bottom: 30px;
         }
 
         .heading h1 {
-            font-size: 30px;
+            font-size: 27px;
+
             color: #222;
-            margin-bottom: 8px;
+
+            margin-bottom: 7px;
+
+            font-weight: 600;
         }
 
         .heading p {
             color: #777;
-            font-size: 14px;
+
+            font-size: 13px;
+
+            line-height: 1.6;
         }
 
+        /* ================= FORM ================= */
+
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 17px;
         }
 
         .form-group label {
+
             display: block;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 7px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
             color: #333;
+
+            margin-bottom: 7px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+
+            position: absolute;
+
+            left: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            font-size: 16px;
+
+            opacity: 0.7;
         }
 
         .form-group input {
+
             width: 100%;
-            padding: 13px 15px;
 
-            border: 1px solid #ddd;
-            border-radius: 10px;
+            padding: 13px 15px 13px 43px;
 
-            font-size: 14px;
+            border: 1px solid #d9e5da;
+
+            border-radius: 12px;
+
+            background: #fbfefb;
+
+            font-size: 13px;
+
+            color: #333;
+
             outline: none;
 
-            transition: 0.3s;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder {
+            color: #aaa;
         }
 
         .form-group input:focus {
-            border-color: #2e7d32;
+
+            border-color: #43a047;
+
+            background: white;
 
             box-shadow:
-                0 0 0 3px rgba(46, 125, 50, 0.10);
+                0 0 0 4px rgba(67, 160, 71, 0.10);
+
+            transform: translateY(-1px);
         }
 
+        /* ================= REGISTER BUTTON ================= */
+
         .register-btn {
+
             width: 100%;
+
             padding: 14px;
-            margin-top: 8px;
+
+            margin-top: 7px;
 
             border: none;
+
             border-radius: 30px;
 
-            background: #2e7d32;
+            background:
+                linear-gradient(
+                    135deg,
+                    #2e7d32,
+                    #43a047
+                );
+
             color: white;
 
-            font-size: 16px;
+            font-size: 15px;
+
             font-weight: 600;
 
             cursor: pointer;
-            transition: 0.3s;
+
+            box-shadow:
+                0 8px 20px rgba(46, 125, 50, 0.20);
+
+            transition: all 0.3s ease;
         }
 
         .register-btn:hover {
-            background: #1b5e20;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 25px rgba(46, 125, 50, 0.28);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1b5e20,
+                    #2e7d32
+                );
         }
 
+        .register-btn:active {
+            transform: translateY(0);
+        }
+
+        /* ================= LOGIN ================= */
+
         .login-text {
+
             text-align: center;
+
             margin-top: 22px;
 
-            font-size: 14px;
-            color: #666;
+            font-size: 13px;
+
+            color: #777;
         }
 
         .login-text a {
+
             color: #2e7d32;
+
             text-decoration: none;
+
             font-weight: 600;
+
+            margin-left: 3px;
         }
 
         .login-text a:hover {
             text-decoration: underline;
         }
 
+        /* ================= BACK HOME ================= */
+
         .back-home {
+
             display: block;
+
             text-align: center;
 
-            margin-top: 18px;
+            margin-top: 16px;
 
-            color: #777;
+            color: #999;
+
             text-decoration: none;
-            font-size: 13px;
+
+            font-size: 12px;
+
+            transition: 0.3s;
         }
 
         .back-home:hover {
             color: #2e7d32;
         }
 
+        /* ================= DIVIDER ================= */
+
+        .divider {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin: 22px 0 0;
+
+            color: #aaa;
+
+            font-size: 11px;
+        }
+
+        .divider::before,
+        .divider::after {
+
+            content: "";
+
+            flex: 1;
+
+            height: 1px;
+
+            background: #e5eee6;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
         @media (max-width: 600px) {
 
+            body {
+                padding: 25px 15px;
+            }
+
             .register-container {
-                padding: 30px 22px;
+
+                padding: 32px 23px;
+
+                border-radius: 22px;
+            }
+
+            .logo {
+                font-size: 26px;
             }
 
             .heading h1 {
-                font-size: 26px;
+                font-size: 24px;
+            }
+
+            .form-group {
+                margin-bottom: 15px;
             }
 
         }
@@ -175,16 +377,29 @@
 
     <div class="register-container">
 
+        <!-- LOGO -->
+
         <div class="logo">
+
+            <div class="logo-icon">
+                🍃
+            </div>
+
             FoodShare
+
         </div>
+
+
+        <!-- HEADING -->
 
         <div class="heading">
 
-            <h1>Create Your Account</h1>
+            <h1>
+                Create Your Account
+            </h1>
 
             <p>
-                Join FoodShare Nepal and make a difference.
+                Join FoodShare Nepal and help make a difference.
             </p>
 
         </div>
@@ -199,10 +414,11 @@
             <input
                 type="hidden"
                 name="role"
-                id="role">
+                id="role"
+            >
 
 
-            <!-- Full Name -->
+            <!-- NAME -->
 
             <div class="form-group">
 
@@ -210,17 +426,26 @@
                     Full Name
                 </label>
 
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    placeholder="Enter your full name"
-                    required>
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        👤
+                    </span>
+
+                    <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
 
             </div>
 
 
-            <!-- Email -->
+            <!-- EMAIL -->
 
             <div class="form-group">
 
@@ -228,17 +453,26 @@
                     Email Address
                 </label>
 
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Enter your email"
-                    required>
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        ✉️
+                    </span>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
 
             </div>
 
 
-            <!-- Phone -->
+            <!-- PHONE -->
 
             <div class="form-group">
 
@@ -246,17 +480,26 @@
                     Phone Number
                 </label>
 
-                <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    placeholder="Enter your phone number"
-                    required>
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        📱
+                    </span>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="Enter your phone number"
+                        required
+                    >
+
+                </div>
 
             </div>
 
 
-            <!-- Location -->
+            <!-- LOCATION -->
 
             <div class="form-group">
 
@@ -264,17 +507,26 @@
                     Location
                 </label>
 
-                <input
-                    type="text"
-                    id="location"
-                    name="location"
-                    placeholder="Enter your location"
-                    required>
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        📍
+                    </span>
+
+                    <input
+                        type="text"
+                        id="location"
+                        name="location"
+                        placeholder="Enter your location"
+                        required
+                    >
+
+                </div>
 
             </div>
 
 
-            <!-- Password -->
+            <!-- PASSWORD -->
 
             <div class="form-group">
 
@@ -282,17 +534,26 @@
                     Password
                 </label>
 
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Create a password"
-                    required>
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        🔒
+                    </span>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Create a password"
+                        required
+                    >
+
+                </div>
 
             </div>
 
 
-            <!-- Confirm Password -->
+            <!-- CONFIRM PASSWORD -->
 
             <div class="form-group">
 
@@ -300,21 +561,31 @@
                     Confirm Password
                 </label>
 
-                <input
-                    type="password"
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    placeholder="Confirm your password"
-                    required>
+                <div class="input-wrapper">
+
+                    <span class="input-icon">
+                        🔐
+                    </span>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        placeholder="Confirm your password"
+                        required
+                    >
+
+                </div>
 
             </div>
 
 
-            <!-- Button -->
+            <!-- BUTTON -->
 
             <button
                 type="submit"
-                class="register-btn">
+                class="register-btn"
+            >
 
                 Create Account
 
@@ -322,6 +593,13 @@
 
         </form>
 
+
+        <div class="divider">
+            Already a member?
+        </div>
+
+
+        <!-- LOGIN -->
 
         <p class="login-text">
 
@@ -334,7 +612,12 @@
         </p>
 
 
-        <a href="/" class="back-home">
+        <!-- HOME -->
+
+        <a
+            href="/"
+            class="back-home"
+        >
             ← Back to Home
         </a>
 
