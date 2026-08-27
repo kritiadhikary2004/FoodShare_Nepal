@@ -498,11 +498,45 @@ app.get("/login", (req, res) => {
     );
 
 });
+// ================= LOGIN ATTEMPT SECURITY =================
+
+const loginAttempts = {};
+
+const MAX_ATTEMPTS = 3;
+const LOCK_TIME = 60 * 1000; // 60 seconds
+
 // ================= LOGIN USER =================
 
 app.post("/login", (req, res) => {
 
     const { email, password } = req.body;
+
+    // Check if this email is currently locked
+    const attempt = loginAttempts[email];
+
+    if (attempt && attempt.lockUntil > Date.now()) {
+
+        const remainingSeconds = Math.ceil(
+            (attempt.lockUntil - Date.now()) / 1000
+        );
+
+        return res.send(`
+            <h1>Too Many Attempts! 🔒</h1>
+
+            <p>
+                Too many incorrect login attempts.
+            </p>
+
+            <p>
+                Please try again after
+                <strong>${remainingSeconds} seconds.</strong>
+            </p>
+
+            <a href="/login">
+                Back to Login
+            </a>
+        `);
+    }
 
     const sql = `
         SELECT *
@@ -527,30 +561,92 @@ app.post("/login", (req, res) => {
                 );
             }
 
+            // ================= WRONG PASSWORD =================
+
             if (results.length === 0) {
 
-                return res.send(
-                    "Invalid email or password!"
-                );
+                if (!loginAttempts[email]) {
+                    loginAttempts[email] = {
+                        count: 0,
+                        lockUntil: 0
+                    };
+                }
+
+                loginAttempts[email].count++;
+
+                const attemptsLeft =
+                    MAX_ATTEMPTS -
+                    loginAttempts[email].count;
+
+                // Lock after 3 wrong attempts
+                if (
+                    loginAttempts[email].count >=
+                    MAX_ATTEMPTS
+                ) {
+
+                    loginAttempts[email].lockUntil =
+                        Date.now() + LOCK_TIME;
+
+                    loginAttempts[email].count = 0;
+
+                    return res.send(`
+                        <h1>Account Temporarily Locked 🔒</h1>
+
+                        <p>
+                            You entered the wrong email or password
+                            too many times.
+                        </p>
+
+                        <p>
+                            Please wait
+                            <strong>60 seconds</strong>
+                            before trying again.
+                        </p>
+
+                        <a href="/login">
+                            Back to Login
+                        </a>
+                    `);
+                }
+
+                return res.send(`
+                    <h1>Invalid Login ❌</h1>
+
+                    <p>
+                        Invalid email or password!
+                    </p>
+
+                    <p>
+                        Attempts remaining:
+                        <strong>${attemptsLeft}</strong>
+                    </p>
+
+                    <a href="/login">
+                        Try Again
+                    </a>
+                `);
             }
+
+            // ================= SUCCESSFUL LOGIN =================
+
+            // Reset failed attempts after successful login
+            delete loginAttempts[email];
 
             const user = results[0];
 
             console.log(
                 "User logged in:",
                 user.email
-            );      
-
-
+            );
 
             // ================= SAVE USER IN SESSION =================
 
             req.session.user = {
-              id: user.id,
-             name: user.name,
-           email: user.email,
-             role: user.role
-              };
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                role: user.role
+            };
 
             // ================= DONOR =================
 
@@ -582,6 +678,7 @@ app.post("/login", (req, res) => {
     );
 
 });
+
 
 // ================= REGISTER PAGE =================
 
