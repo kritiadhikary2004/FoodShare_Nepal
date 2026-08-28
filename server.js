@@ -9,6 +9,7 @@ const app = express();
 
 const PORT = 3000;
 
+
 // ================= DATABASE =================
 
 const db = mysql.createConnection({
@@ -19,27 +20,46 @@ const db = mysql.createConnection({
 });
 
 db.connect((err) => {
+
     if (err) {
-        console.log("Database connection failed:", err);
+
+        console.log(
+            "Database connection failed:",
+            err
+        );
+
     } else {
-        console.log("MySQL database connected successfully!");
+
+        console.log(
+            "MySQL database connected successfully!"
+        );
+
     }
+
 });
 
 
 // ================= MIDDLEWARE =================
 
-app.use(express.static(path.join(__dirname, "public")));
+app.use(
+    express.static(
+        path.join(__dirname, "public")
+    )
+);
 
-app.use(express.urlencoded({
-    extended: true
-}));
+app.use(
+    express.urlencoded({
+        extended: true
+    })
+);
 
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false
-}));
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: false
+    })
+);
 
 
 // ================= HOME =================
@@ -47,7 +67,11 @@ app.use(session({
 app.get("/", (req, res) => {
 
     res.sendFile(
-        path.join(__dirname, "public", "home.html")
+        path.join(
+            __dirname,
+            "public",
+            "home.html"
+        )
     );
 
 });
@@ -58,7 +82,11 @@ app.get("/", (req, res) => {
 app.get("/choose-role", (req, res) => {
 
     res.sendFile(
-        path.join(__dirname, "public", "choose-role.html")
+        path.join(
+            __dirname,
+            "public",
+            "choose-role.html"
+        )
     );
 
 });
@@ -69,15 +97,23 @@ app.get("/choose-role", (req, res) => {
 app.get("/donate", (req, res) => {
 
     if (!req.session.user) {
+
         return res.redirect("/login");
+
     }
 
     if (req.session.user.role !== "donor") {
+
         return res.redirect("/receiver");
+
     }
 
     res.sendFile(
-        path.join(__dirname, "public", "donate.html")
+        path.join(
+            __dirname,
+            "public",
+            "donate.html"
+        )
     );
 
 });
@@ -88,11 +124,15 @@ app.get("/donate", (req, res) => {
 app.post("/donate", (req, res) => {
 
     if (!req.session.user) {
+
         return res.redirect("/login");
+
     }
 
     if (req.session.user.role !== "donor") {
+
         return res.redirect("/receiver");
+
     }
 
     const {
@@ -144,6 +184,7 @@ app.post("/donate", (req, res) => {
                 return res.send(
                     "Donation failed. Please check the terminal."
                 );
+
             }
 
 
@@ -269,16 +310,18 @@ app.get("/donor", (req, res) => {
 
     }
 
-
     if (req.session.user.role !== "donor") {
 
         return res.redirect("/receiver");
 
     }
 
-
     res.sendFile(
-        path.join(__dirname, "public", "donor.html")
+        path.join(
+            __dirname,
+            "public",
+            "donor.html"
+        )
     );
 
 });
@@ -294,6 +337,32 @@ app.get("/receiver", (req, res) => {
 
     }
 
+    if (req.session.user.role !== "receiver") {
+
+        return res.redirect("/donor");
+
+    }
+
+    res.sendFile(
+        path.join(
+            __dirname,
+            "public",
+            "receiver.html"
+        )
+    );
+
+});
+
+
+// ================= AVAILABLE FOOD =================
+
+app.get("/available-food", (req, res) => {
+
+    if (!req.session.user) {
+
+        return res.redirect("/login");
+
+    }
 
     if (req.session.user.role !== "receiver") {
 
@@ -302,8 +371,448 @@ app.get("/receiver", (req, res) => {
     }
 
 
-    res.sendFile(
-        path.join(__dirname, "public", "receiver.html")
+    const sql = `
+        SELECT *
+        FROM donations
+        ORDER BY id DESC
+    `;
+
+
+    db.query(
+        sql,
+        (err, donations) => {
+
+            if (err) {
+
+                console.log(
+                    "Error fetching available food:",
+                    err
+                );
+
+                return res.send(
+                    "Could not load available food."
+                );
+
+            }
+
+
+            let foodHTML = "";
+
+
+            if (donations.length === 0) {
+
+                foodHTML = `
+
+                    <div class="empty">
+
+                        <div class="empty-icon">
+                            🍽️
+                        </div>
+
+                        <h2>
+                            No Food Available
+                        </h2>
+
+                        <p>
+                            There are currently no food donations available.
+                        </p>
+
+                    </div>
+
+                `;
+
+            } else {
+
+                donations.forEach((food) => {
+
+                    foodHTML += `
+
+                        <div class="food-card">
+
+                            <div class="food-icon">
+                                🍱
+                            </div>
+
+                            <div class="food-content">
+
+                                <h2>
+                                    ${food.food_name}
+                                </h2>
+
+                                <p>
+                                    <strong>
+                                        Quantity:
+                                    </strong>
+                                    ${food.quantity}
+                                </p>
+
+                                <p>
+                                    <strong>
+                                        Food Type:
+                                    </strong>
+                                    ${food.food_type}
+                                </p>
+
+                                <p>
+                                    <strong>
+                                        Location:
+                                    </strong>
+                                    ${food.location}
+                                </p>
+
+                                <p>
+                                    <strong>
+                                        Available Date:
+                                    </strong>
+                                    ${food.available_date}
+                                </p>
+
+                                <p>
+                                    <strong>
+                                        Pickup Time:
+                                    </strong>
+                                    ${food.pickup_time}
+                                </p>
+
+                                <p>
+                                    <strong>
+                                        Description:
+                                    </strong>
+                                    ${food.description || "No description"}
+                                </p>
+
+                                <button
+                                    class="request-btn"
+                                    onclick="alert('Food request feature coming soon!')"
+                                >
+                                    Request Food
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                });
+
+            }
+
+
+            res.send(`
+
+                <!DOCTYPE html>
+
+                <html>
+
+                <head>
+
+                    <meta charset="UTF-8">
+
+                    <meta
+                        name="viewport"
+                        content="width=device-width, initial-scale=1.0"
+                    >
+
+                    <title>
+                        Available Food | FoodShare Nepal
+                    </title>
+
+
+                    <style>
+
+                        * {
+
+                            margin: 0;
+
+                            padding: 0;
+
+                            box-sizing: border-box;
+
+                        }
+
+
+                        body {
+
+                            font-family: Arial, sans-serif;
+
+                            background:
+                                linear-gradient(
+                                    135deg,
+                                    #e8f5e9,
+                                    #ffffff
+                                );
+
+                            min-height: 100vh;
+
+                            padding: 40px 20px;
+
+                        }
+
+
+                        .container {
+
+                            width: 90%;
+
+                            max-width: 1000px;
+
+                            margin: auto;
+
+                        }
+
+
+                        .header {
+
+                            text-align: center;
+
+                            margin-bottom: 35px;
+
+                        }
+
+
+                        .header h1 {
+
+                            color: #2e7d32;
+
+                            font-size: 34px;
+
+                            margin-bottom: 10px;
+
+                        }
+
+
+                        .header p {
+
+                            color: #777;
+
+                            font-size: 15px;
+
+                        }
+
+
+                        .food-card {
+
+                            background: white;
+
+                            padding: 25px;
+
+                            margin-bottom: 20px;
+
+                            border-radius: 18px;
+
+                            display: flex;
+
+                            gap: 20px;
+
+                            box-shadow:
+                                0 8px 25px
+                                rgba(46,125,50,0.10);
+
+                            border:
+                                1px solid #e0f2e1;
+
+                        }
+
+
+                        .food-icon {
+
+                            width: 65px;
+
+                            height: 65px;
+
+                            min-width: 65px;
+
+                            display: flex;
+
+                            justify-content: center;
+
+                            align-items: center;
+
+                            background: #f1f8e9;
+
+                            border-radius: 16px;
+
+                            font-size: 30px;
+
+                        }
+
+
+                        .food-content {
+
+                            flex: 1;
+
+                        }
+
+
+                        .food-content h2 {
+
+                            color: #2e7d32;
+
+                            margin-bottom: 12px;
+
+                        }
+
+
+                        .food-content p {
+
+                            color: #666;
+
+                            margin: 7px 0;
+
+                            font-size: 14px;
+
+                        }
+
+
+                        .request-btn {
+
+                            margin-top: 15px;
+
+                            padding: 10px 22px;
+
+                            border: none;
+
+                            background: #2e7d32;
+
+                            color: white;
+
+                            border-radius: 25px;
+
+                            cursor: pointer;
+
+                            font-size: 14px;
+
+                        }
+
+
+                        .request-btn:hover {
+
+                            background: #1b5e20;
+
+                        }
+
+
+                        .empty {
+
+                            background: white;
+
+                            padding: 50px;
+
+                            text-align: center;
+
+                            border-radius: 18px;
+
+                            box-shadow:
+                                0 8px 25px
+                                rgba(0,0,0,0.08);
+
+                        }
+
+
+                        .empty-icon {
+
+                            font-size: 45px;
+
+                            margin-bottom: 15px;
+
+                        }
+
+
+                        .empty h2 {
+
+                            color: #2e7d32;
+
+                            margin-bottom: 10px;
+
+                        }
+
+
+                        .empty p {
+
+                            color: #777;
+
+                        }
+
+
+                        .back {
+
+                            display: block;
+
+                            width: fit-content;
+
+                            margin: 30px auto 0;
+
+                            padding: 11px 25px;
+
+                            background: #2e7d32;
+
+                            color: white;
+
+                            text-decoration: none;
+
+                            border-radius: 25px;
+
+                        }
+
+
+                        @media (max-width: 600px) {
+
+                            .food-card {
+
+                                flex-direction: column;
+
+                            }
+
+                            .header h1 {
+
+                                font-size: 28px;
+
+                            }
+
+                        }
+
+                    </style>
+
+                </head>
+
+
+                <body>
+
+                    <div class="container">
+
+                        <div class="header">
+
+                            <h1>
+                                Available Food 🍱
+                            </h1>
+
+                            <p>
+                                Find food donations shared by generous donors.
+                            </p>
+
+                        </div>
+
+
+                        ${foodHTML}
+
+
+                        <a
+                            href="/receiver"
+                            class="back"
+                        >
+                            ← Back to Receiver Dashboard
+                        </a>
+
+                    </div>
+
+                </body>
+
+                </html>
+
+            `);
+
+        }
+
     );
 
 });
@@ -344,7 +853,6 @@ app.get("/my-donations", (req, res) => {
         return res.redirect("/login");
 
     }
-
 
     if (req.session.user.role !== "donor") {
 
@@ -646,6 +1154,7 @@ app.get("/my-donations", (req, res) => {
             `);
 
         }
+
     );
 
 });
@@ -656,7 +1165,11 @@ app.get("/my-donations", (req, res) => {
 app.get("/login", (req, res) => {
 
     res.sendFile(
-        path.join(__dirname, "public", "login.html")
+        path.join(
+            __dirname,
+            "public",
+            "login.html"
+        )
     );
 
 });
@@ -681,9 +1194,8 @@ app.post("/login", (req, res) => {
     } = req.body;
 
 
-    // ================= CHECK LOCK =================
-
-    const attempt = loginAttempts[email];
+    const attempt =
+        loginAttempts[email];
 
 
     if (
@@ -691,9 +1203,11 @@ app.post("/login", (req, res) => {
         attempt.lockUntil > Date.now()
     ) {
 
-        const remainingSeconds = Math.ceil(
-            (attempt.lockUntil - Date.now()) / 1000
-        );
+        const remainingSeconds =
+            Math.ceil(
+                (attempt.lockUntil -
+                    Date.now()) / 1000
+            );
 
 
         return res.send(`
@@ -753,8 +1267,6 @@ app.post("/login", (req, res) => {
             }
 
 
-            // ================= WRONG LOGIN =================
-
             if (results.length === 0) {
 
                 if (!loginAttempts[email]) {
@@ -777,8 +1289,6 @@ app.post("/login", (req, res) => {
                     MAX_ATTEMPTS -
                     loginAttempts[email].count;
 
-
-                // ================= LOCK ACCOUNT =================
 
                 if (
                     loginAttempts[email].count >=
@@ -846,8 +1356,6 @@ app.post("/login", (req, res) => {
             }
 
 
-            // ================= SUCCESSFUL LOGIN =================
-
             delete loginAttempts[email];
 
 
@@ -859,8 +1367,6 @@ app.post("/login", (req, res) => {
                 user.email
             );
 
-
-            // ================= SAVE USER IN SESSION =================
 
             req.session.user = {
 
@@ -874,8 +1380,6 @@ app.post("/login", (req, res) => {
 
             };
 
-
-            // ================= ROLE REDIRECT =================
 
             if (user.role === "donor") {
 
@@ -905,7 +1409,11 @@ app.post("/login", (req, res) => {
 app.get("/register", (req, res) => {
 
     res.sendFile(
-        path.join(__dirname, "public", "register.html")
+        path.join(
+            __dirname,
+            "public",
+            "register.html"
+        )
     );
 
 });
@@ -926,8 +1434,6 @@ app.post("/register", (req, res) => {
     } = req.body;
 
 
-    // ================= CHECK PASSWORD =================
-
     if (password !== confirmPassword) {
 
         return res.send(
@@ -940,8 +1446,6 @@ app.post("/register", (req, res) => {
     const userRole =
         role || "receiver";
 
-
-    // ================= INSERT USER =================
 
     const sql = `
 
@@ -986,8 +1490,6 @@ app.post("/register", (req, res) => {
             }
 
 
-            // ================= SAVE NEW USER =================
-
             req.session.user = {
 
                 id: result.insertId,
@@ -1000,8 +1502,6 @@ app.post("/register", (req, res) => {
 
             };
 
-
-            // ================= ROLE REDIRECT =================
 
             if (userRole === "donor") {
 

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Available Food | FoodShare Nepal</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e8f5e9,
+                    #f1f8e9,
+                    #ffffff
+                );
+
+            color: #333;
+
+            padding-bottom: 50px;
+        }
+
+        /* ================= HEADER ================= */
+
+        header {
+            background: rgba(255,255,255,0.95);
+
+            box-shadow:
+                0 3px 20px rgba(0,0,0,0.07);
+        }
+
+        nav {
+            width: 90%;
+            max-width: 1200px;
+
+            height: 75px;
+
+            margin: auto;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            font-size: 24px;
+
+            font-weight: 600;
+
+            color: #2e7d32;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background: #e8f5e9;
+
+            border-radius: 50%;
+        }
+
+        .back {
+            text-decoration: none;
+
+            padding: 9px 20px;
+
+            border: 1px solid #c8e6c9;
+
+            border-radius: 25px;
+
+            color: #2e7d32;
+
+            font-size: 14px;
+        }
+
+        .back:hover {
+            background: #2e7d32;
+
+            color: white;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 90%;
+
+            max-width: 1100px;
+
+            margin: 50px auto;
+        }
+
+        .heading {
+            text-align: center;
+
+            margin-bottom: 40px;
+        }
+
+        .heading h1 {
+            font-size: 34px;
+
+            color: #222;
+
+            margin-bottom: 10px;
+        }
+
+        .heading h1 span {
+            color: #2e7d32;
+        }
+
+        .heading p {
+            color: #777;
+
+            font-size: 15px;
+        }
+
+        /* ================= FOOD CARDS ================= */
+
+        .food-container {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 25px;
+        }
+
+        .food-card {
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 20px;
+
+            border: 1px solid #e0f2e1;
+
+            box-shadow:
+                0 10px 30px
+                rgba(46,125,50,0.10);
+
+            transition: 0.3s;
+        }
+
+        .food-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 15px 35px
+                rgba(46,125,50,0.15);
+        }
+
+        .food-icon {
+            width: 60px;
+            height: 60px;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background: #f1f8e9;
+
+            border-radius: 16px;
+
+            font-size: 28px;
+
+            margin-bottom: 18px;
+        }
+
+        .food-card h2 {
+            color: #2e7d32;
+
+            margin-bottom: 15px;
+
+            font-size: 22px;
+        }
+
+        .food-card p {
+            color: #666;
+
+            font-size: 14px;
+
+            margin: 8px 0;
+
+            line-height: 1.6;
+        }
+
+        .food-card strong {
+            color: #333;
+        }
+
+        .request-btn {
+            display: inline-block;
+
+            margin-top: 18px;
+
+            padding: 10px 22px;
+
+            background: #2e7d32;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 25px;
+
+            font-size: 14px;
+        }
+
+        .request-btn:hover {
+            background: #1b5e20;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            background: white;
+
+            padding: 50px 30px;
+
+            text-align: center;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,0,0,0.08);
+        }
+
+        .empty-icon {
+            font-size: 50px;
+
+            margin-bottom: 15px;
+        }
+
+        .empty h2 {
+            color: #2e7d32;
+
+            margin-bottom: 10px;
+        }
+
+        .empty p {
+            color: #777;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 700px) {
+
+            .food-container {
+                grid-template-columns: 1fr;
+            }
+
+            .heading h1 {
+                font-size: 28px;
+            }
+
+            nav {
+                width: 88%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<header>
+
+    <nav>
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🍃
+            </div>
+
+            FoodShare Nepal
+
+        </div>
+
+        <a href="/receiver" class="back">
+            ← Dashboard
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="container">
+
+    <section class="heading">
+
+        <h1>
+            Available <span>Food</span> 🍱
+        </h1>
+
+        <p>
+            Find food donations shared by generous donors.
+        </p>
+
+    </section>
+
+
+    <section class="food-container">
+
+        <!-- FOOD CARDS WILL BE LOADED FROM DATABASE -->
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                🍱
+            </div>
+
+            <h2>
+                Loading Available Food...
+            </h2>
+
+            <p>
+                Please wait while we find available donations.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+
+</html>
