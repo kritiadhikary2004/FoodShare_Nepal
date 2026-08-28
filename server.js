@@ -4,6 +4,7 @@ const mysql = require("mysql2");
 const express = require("express");
 const path = require("path");
 const session = require("express-session");
+
 const app = express();
 
 const PORT = 3000;
@@ -30,7 +31,10 @@ db.connect((err) => {
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+    extended: true
+}));
+
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -41,33 +45,55 @@ app.use(session({
 // ================= HOME =================
 
 app.get("/", (req, res) => {
+
     res.sendFile(
         path.join(__dirname, "public", "home.html")
     );
+
 });
 
 
 // ================= CHOOSE ROLE =================
 
 app.get("/choose-role", (req, res) => {
+
     res.sendFile(
         path.join(__dirname, "public", "choose-role.html")
     );
+
 });
 
 
 // ================= DONATE PAGE =================
 
 app.get("/donate", (req, res) => {
+
+    if (!req.session.user) {
+        return res.redirect("/login");
+    }
+
+    if (req.session.user.role !== "donor") {
+        return res.redirect("/receiver");
+    }
+
     res.sendFile(
         path.join(__dirname, "public", "donate.html")
     );
+
 });
 
 
 // ================= SAVE DONATION =================
 
 app.post("/donate", (req, res) => {
+
+    if (!req.session.user) {
+        return res.redirect("/login");
+    }
+
+    if (req.session.user.role !== "donor") {
+        return res.redirect("/receiver");
+    }
 
     const {
         food_name,
@@ -78,6 +104,7 @@ app.post("/donate", (req, res) => {
         pickup_time,
         description
     } = req.body;
+
 
     const sql = `
         INSERT INTO donations
@@ -93,6 +120,7 @@ app.post("/donate", (req, res) => {
         VALUES (?, ?, ?, ?, ?, ?, ?)
     `;
 
+
     db.query(
         sql,
         [
@@ -107,12 +135,17 @@ app.post("/donate", (req, res) => {
         (err, result) => {
 
             if (err) {
-                console.log("Donation error:", err);
+
+                console.log(
+                    "Donation error:",
+                    err
+                );
 
                 return res.send(
                     "Donation failed. Please check the terminal."
                 );
             }
+
 
             res.send(`
 
@@ -129,22 +162,30 @@ app.post("/donate", (req, res) => {
                         content="width=device-width, initial-scale=1.0"
                     >
 
-                    <title>Donation Successful</title>
+                    <title>
+                        Donation Successful
+                    </title>
 
                     <style>
 
                         body {
+
                             font-family: Arial, sans-serif;
+
                             background: #e8f5e9;
 
                             display: flex;
+
                             justify-content: center;
+
                             align-items: center;
 
                             min-height: 100vh;
+
                         }
 
                         .success {
+
                             background: white;
 
                             padding: 40px;
@@ -156,13 +197,17 @@ app.post("/donate", (req, res) => {
                             box-shadow:
                                 0 10px 30px
                                 rgba(0,0,0,0.1);
+
                         }
 
                         h1 {
+
                             color: #2e7d32;
+
                         }
 
                         a {
+
                             display: inline-block;
 
                             margin-top: 20px;
@@ -176,11 +221,13 @@ app.post("/donate", (req, res) => {
                             text-decoration: none;
 
                             border-radius: 25px;
+
                         }
 
                     </style>
 
                 </head>
+
 
                 <body>
 
@@ -205,8 +252,10 @@ app.post("/donate", (req, res) => {
                 </html>
 
             `);
+
         }
     );
+
 });
 
 
@@ -215,13 +264,51 @@ app.post("/donate", (req, res) => {
 app.get("/donor", (req, res) => {
 
     if (!req.session.user) {
+
         return res.redirect("/login");
+
     }
+
+
+    if (req.session.user.role !== "donor") {
+
+        return res.redirect("/receiver");
+
+    }
+
 
     res.sendFile(
         path.join(__dirname, "public", "donor.html")
     );
+
 });
+
+
+// ================= RECEIVER DASHBOARD =================
+
+app.get("/receiver", (req, res) => {
+
+    if (!req.session.user) {
+
+        return res.redirect("/login");
+
+    }
+
+
+    if (req.session.user.role !== "receiver") {
+
+        return res.redirect("/donor");
+
+    }
+
+
+    res.sendFile(
+        path.join(__dirname, "public", "receiver.html")
+    );
+
+});
+
+
 // ================= LOGOUT =================
 
 app.get("/logout", (req, res) => {
@@ -229,25 +316,49 @@ app.get("/logout", (req, res) => {
     req.session.destroy((err) => {
 
         if (err) {
-            console.log("Logout error:", err);
 
-            return res.send("Logout failed.");
+            console.log(
+                "Logout error:",
+                err
+            );
+
+            return res.send(
+                "Logout failed."
+            );
+
         }
 
         res.redirect("/login");
+
     });
 
 });
 
+
 // ================= MY DONATIONS =================
 
 app.get("/my-donations", (req, res) => {
+
+    if (!req.session.user) {
+
+        return res.redirect("/login");
+
+    }
+
+
+    if (req.session.user.role !== "donor") {
+
+        return res.redirect("/receiver");
+
+    }
+
 
     const sql = `
         SELECT *
         FROM donations
         ORDER BY id DESC
     `;
+
 
     db.query(
         sql,
@@ -263,9 +374,12 @@ app.get("/my-donations", (req, res) => {
                 return res.send(
                     "Could not load donations."
                 );
+
             }
 
+
             let donationHTML = "";
+
 
             if (donations.length === 0) {
 
@@ -298,40 +412,61 @@ app.get("/my-donations", (req, res) => {
                             </h2>
 
                             <p>
-                                <strong>Quantity:</strong>
+                                <strong>
+                                    Quantity:
+                                </strong>
+
                                 ${donation.quantity}
                             </p>
 
                             <p>
-                                <strong>Food Type:</strong>
+                                <strong>
+                                    Food Type:
+                                </strong>
+
                                 ${donation.food_type}
                             </p>
 
                             <p>
-                                <strong>Pickup Location:</strong>
+                                <strong>
+                                    Pickup Location:
+                                </strong>
+
                                 ${donation.location}
                             </p>
 
                             <p>
-                                <strong>Available Date:</strong>
+                                <strong>
+                                    Available Date:
+                                </strong>
+
                                 ${donation.available_date}
                             </p>
 
                             <p>
-                                <strong>Pickup Time:</strong>
+                                <strong>
+                                    Pickup Time:
+                                </strong>
+
                                 ${donation.pickup_time}
                             </p>
 
                             <p>
-                                <strong>Description:</strong>
+                                <strong>
+                                    Description:
+                                </strong>
+
                                 ${donation.description || "No description"}
                             </p>
 
                         </div>
 
                     `;
+
                 });
+
             }
+
 
             res.send(`
 
@@ -355,10 +490,15 @@ app.get("/my-donations", (req, res) => {
                     <style>
 
                         * {
+
                             margin: 0;
+
                             padding: 0;
+
                             box-sizing: border-box;
+
                         }
+
 
                         body {
 
@@ -374,14 +514,18 @@ app.get("/my-donations", (req, res) => {
                             min-height: 100vh;
 
                             padding: 40px 20px;
+
                         }
+
 
                         .container {
 
                             max-width: 900px;
 
                             margin: auto;
+
                         }
+
 
                         h1 {
 
@@ -390,7 +534,9 @@ app.get("/my-donations", (req, res) => {
                             color: #2e7d32;
 
                             margin-bottom: 30px;
+
                         }
+
 
                         .donation-card {
 
@@ -405,21 +551,27 @@ app.get("/my-donations", (req, res) => {
                             box-shadow:
                                 0 8px 25px
                                 rgba(0,0,0,0.08);
+
                         }
+
 
                         .donation-card h2 {
 
                             color: #2e7d32;
 
                             margin-bottom: 15px;
+
                         }
+
 
                         .donation-card p {
 
                             color: #555;
 
                             margin: 8px 0;
+
                         }
+
 
                         .empty {
 
@@ -430,14 +582,18 @@ app.get("/my-donations", (req, res) => {
                             text-align: center;
 
                             border-radius: 15px;
+
                         }
+
 
                         .empty p {
 
                             color: #777;
 
                             margin-top: 10px;
+
                         }
+
 
                         .back {
 
@@ -456,11 +612,13 @@ app.get("/my-donations", (req, res) => {
                             text-decoration: none;
 
                             border-radius: 25px;
+
                         }
 
                     </style>
 
                 </head>
+
 
                 <body>
 
@@ -486,9 +644,13 @@ app.get("/my-donations", (req, res) => {
                 </html>
 
             `);
+
         }
     );
+
 });
+
+
 // ================= LOGIN PAGE =================
 
 app.get("/login", (req, res) => {
@@ -498,30 +660,47 @@ app.get("/login", (req, res) => {
     );
 
 });
+
+
 // ================= LOGIN ATTEMPT SECURITY =================
 
 const loginAttempts = {};
 
 const MAX_ATTEMPTS = 3;
-const LOCK_TIME = 60 * 1000; // 60 seconds
+
+const LOCK_TIME = 60 * 1000;
+
 
 // ================= LOGIN USER =================
 
 app.post("/login", (req, res) => {
 
-    const { email, password } = req.body;
+    const {
+        email,
+        password
+    } = req.body;
 
-    // Check if this email is currently locked
+
+    // ================= CHECK LOCK =================
+
     const attempt = loginAttempts[email];
 
-    if (attempt && attempt.lockUntil > Date.now()) {
+
+    if (
+        attempt &&
+        attempt.lockUntil > Date.now()
+    ) {
 
         const remainingSeconds = Math.ceil(
             (attempt.lockUntil - Date.now()) / 1000
         );
 
+
         return res.send(`
-            <h1>Too Many Attempts! 🔒</h1>
+
+            <h1>
+                Too Many Attempts! 🔒
+            </h1>
 
             <p>
                 Too many incorrect login attempts.
@@ -529,20 +708,31 @@ app.post("/login", (req, res) => {
 
             <p>
                 Please try again after
-                <strong>${remainingSeconds} seconds.</strong>
+                <strong>
+                    ${remainingSeconds} seconds.
+                </strong>
             </p>
 
             <a href="/login">
                 Back to Login
             </a>
+
         `);
+
     }
 
+
     const sql = `
+
         SELECT *
+
         FROM users
-        WHERE email = ? AND password = ?
+
+        WHERE email = ?
+        AND password = ?
+
     `;
+
 
     db.query(
         sql,
@@ -559,26 +749,37 @@ app.post("/login", (req, res) => {
                 return res.send(
                     "Login failed. Please check the terminal."
                 );
+
             }
 
-            // ================= WRONG PASSWORD =================
+
+            // ================= WRONG LOGIN =================
 
             if (results.length === 0) {
 
                 if (!loginAttempts[email]) {
+
                     loginAttempts[email] = {
+
                         count: 0,
+
                         lockUntil: 0
+
                     };
+
                 }
 
+
                 loginAttempts[email].count++;
+
 
                 const attemptsLeft =
                     MAX_ATTEMPTS -
                     loginAttempts[email].count;
 
-                // Lock after 3 wrong attempts
+
+                // ================= LOCK ACCOUNT =================
+
                 if (
                     loginAttempts[email].count >=
                     MAX_ATTEMPTS
@@ -587,30 +788,43 @@ app.post("/login", (req, res) => {
                     loginAttempts[email].lockUntil =
                         Date.now() + LOCK_TIME;
 
+
                     loginAttempts[email].count = 0;
 
+
                     return res.send(`
-                        <h1>Account Temporarily Locked 🔒</h1>
+
+                        <h1>
+                            Account Temporarily Locked 🔒
+                        </h1>
 
                         <p>
-                            You entered the wrong email or password
-                            too many times.
+                            You entered the wrong email
+                            or password too many times.
                         </p>
 
                         <p>
                             Please wait
-                            <strong>60 seconds</strong>
+                            <strong>
+                                60 seconds
+                            </strong>
                             before trying again.
                         </p>
 
                         <a href="/login">
                             Back to Login
                         </a>
+
                     `);
+
                 }
 
+
                 return res.send(`
-                    <h1>Invalid Login ❌</h1>
+
+                    <h1>
+                        Invalid Login ❌
+                    </h1>
 
                     <p>
                         Invalid email or password!
@@ -618,63 +832,69 @@ app.post("/login", (req, res) => {
 
                     <p>
                         Attempts remaining:
-                        <strong>${attemptsLeft}</strong>
+                        <strong>
+                            ${attemptsLeft}
+                        </strong>
                     </p>
 
                     <a href="/login">
                         Try Again
                     </a>
+
                 `);
+
             }
+
 
             // ================= SUCCESSFUL LOGIN =================
 
-            // Reset failed attempts after successful login
             delete loginAttempts[email];
 
+
             const user = results[0];
+
 
             console.log(
                 "User logged in:",
                 user.email
             );
 
+
             // ================= SAVE USER IN SESSION =================
 
             req.session.user = {
+
                 id: user.id,
+
                 name: user.name,
+
                 email: user.email,
+
                 role: user.role
+
             };
 
-            // ================= DONOR =================
+
+            // ================= ROLE REDIRECT =================
 
             if (user.role === "donor") {
 
                 return res.redirect("/donor");
+
             }
 
-            // ================= RECEIVER =================
 
             if (user.role === "receiver") {
 
-                return res.send(`
-                    <h1>
-                        Welcome ${user.name}! 🎉
-                    </h1>
+                return res.redirect("/receiver");
 
-                    <p>
-                        You are logged in successfully.
-                    </p>
-
-                    <a href="/">
-                        Go to Home
-                    </a>
-                `);
             }
 
+
+            return res.redirect("/");
+
         }
+
     );
 
 });
@@ -687,6 +907,7 @@ app.get("/register", (req, res) => {
     res.sendFile(
         path.join(__dirname, "public", "register.html")
     );
+
 });
 
 
@@ -704,6 +925,7 @@ app.post("/register", (req, res) => {
         role
     } = req.body;
 
+
     // ================= CHECK PASSWORD =================
 
     if (password !== confirmPassword) {
@@ -711,13 +933,18 @@ app.post("/register", (req, res) => {
         return res.send(
             "Passwords do not match!"
         );
+
     }
 
-    const userRole = role || "receiver";
+
+    const userRole =
+        role || "receiver";
+
 
     // ================= INSERT USER =================
 
     const sql = `
+
         INSERT INTO users
         (
             name,
@@ -727,8 +954,11 @@ app.post("/register", (req, res) => {
             password,
             role
         )
+
         VALUES (?, ?, ?, ?, ?, ?)
+
     `;
+
 
     db.query(
         sql,
@@ -752,61 +982,47 @@ app.post("/register", (req, res) => {
                 return res.send(
                     "Registration failed. Please check the terminal."
                 );
+
             }
 
-            // ================= DONOR =================
+
+            // ================= SAVE NEW USER =================
+
+            req.session.user = {
+
+                id: result.insertId,
+
+                name: name,
+
+                email: email,
+
+                role: userRole
+
+            };
+
+
+            // ================= ROLE REDIRECT =================
 
             if (userRole === "donor") {
 
-                return res.redirect(
-                    "/donor"
-                );
+                return res.redirect("/donor");
+
             }
 
-            // ================= RECEIVER =================
 
-            res.send(`
+            if (userRole === "receiver") {
 
-                <!DOCTYPE html>
+                return res.redirect("/receiver");
 
-                <html>
+            }
 
-                <head>
 
-                    <meta charset="UTF-8">
+            return res.redirect("/");
 
-                    <meta
-                        name="viewport"
-                        content="width=device-width, initial-scale=1.0"
-                    >
-
-                    <title>
-                        Registration Successful
-                    </title>
-
-                </head>
-
-                <body>
-
-                    <h1>
-                        Registration Successful! 🎉
-                    </h1>
-
-                    <p>
-                        Welcome to FoodShare Nepal.
-                    </p>
-
-                    <a href="/">
-                        Go to Home
-                    </a>
-
-                </body>
-
-                </html>
-
-            `);
         }
+
     );
+
 });
 
 
